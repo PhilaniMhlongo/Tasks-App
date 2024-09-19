@@ -1,6 +1,3 @@
-#Makefile For Assignment 2
-#Philani Mhlongo
-#02/09/2021
 JAVAC=/usr/bin/javac
 .SUFFIXES: .java .class
 SRCDIR=src

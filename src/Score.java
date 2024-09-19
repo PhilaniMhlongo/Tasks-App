@@ -1,46 +1,101 @@
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+
+/**
+ * Score Constructor
+ */
 public class Score {
-    private AtomicInteger missedWords;
-    private AtomicInteger caughtWords;
-    private AtomicInteger gameScore;
+	private AtomicInteger missedWords;
+	private AtomicInteger caughtWords;
+	private AtomicInteger gameScore;
+	private  AtomicInteger highScore;
+	
+	Score() {
+		missedWords=new AtomicInteger(0);
+		caughtWords=new AtomicInteger(0);
+		gameScore=new AtomicInteger(0);
+	}
+		
+	// all getters and setters must be synchronized
 
-    Score() {
-        missedWords=new AtomicInteger(0);
-        caughtWords=new AtomicInteger(0);
-        gameScore=new AtomicInteger(0);
-    }
+	/**
+	 * getMissed
+	 * @return
+	 */
+	synchronized public int getMissed() {
+		return missedWords.get();
+	}
 
-    // all getters and setters must be synchronized
+	/**
+	 * getCaught
+	 * @return
+	 */
+	synchronized public int getCaught() {
+		return caughtWords.get();
+	}
 
-    public synchronized int getMissed() {
-        return missedWords.get();
-    }
+	/**
+	 * getTotal
+	 * @return
+	 */
+	synchronized public int getTotal() {
+		return (missedWords.get()+caughtWords.get());
+	}
 
-    public synchronized int getCaught() {
-        return caughtWords.get();
-    }
+	/**
+	 * getScore
+	 * @return
+	 */
+	public int getScore() {
+		return gameScore.get();
+	}
 
-    public synchronized int getTotal() {
-        return (missedWords.get()+caughtWords.get());
-    }
+	/**
+	 * missedWord
+	 */
+	synchronized public void missedWord() {
+		missedWords.getAndIncrement();
+	}
 
-    public synchronized int getScore() {
-        return gameScore.get();
-    }
+	/**
+	 * caughtWord
+	 * @param length
+	 */
+	synchronized public void caughtWord(int length) {
+		caughtWords.getAndIncrement();
+		gameScore.getAndAdd(length);
+	}
 
-    public synchronized void missedWord() {
-        missedWords.getAndIncrement();
-    }
+	/**
+	 * updateHighScore
+	 */
+	synchronized public void updateHighScore(){
+		if(gameScore.get()>highScore.get()){
+			highScore=gameScore;
+		}
+	}
 
-    public synchronized void caughtWord(int length) {
-        caughtWords.getAndIncrement();
-        gameScore.getAndAdd(length);
-    }
+	/**
+	 * reset Hight Score
+	 */
+	synchronized public void resetHightScore(){
+		highScore=new AtomicInteger(0);
+	}
 
-    public synchronized void resetScore() {
-        caughtWords=new AtomicInteger(0);
-        missedWords=new AtomicInteger(0);
-        gameScore=new AtomicInteger(0);
-    }
+	/**
+	 * reset Score
+	 */
+	synchronized public void resetScore() {
+		caughtWords=new AtomicInteger(0);
+		missedWords=new AtomicInteger(0);
+		gameScore=new AtomicInteger(0);
+	}
+
+	/**
+	 * toString
+	 * @return
+	 */
+	public String toString(){
+		return "Caught: "+caughtWords+"\nMissed: "+missedWords+"\nScore"+gameScore+"\nHigh Score: "+highScore;
+	}
 }
-
