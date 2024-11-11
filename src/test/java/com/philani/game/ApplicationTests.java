@@ -1,4 +1,4 @@
-package com.luv2code.jobportal;
+package com.philani.game;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
