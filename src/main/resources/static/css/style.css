@@ -1,0 +1,418 @@
+@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600);
+
+body {
+  background: #272727;
+  font-family: "Source Code Pro", monospace;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#hero {
+  position: absolute;
+  display: block;
+  left: calc(50% - 25px);
+  bottom: calc(10% - 25px);
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  background: #4CC3D9;
+  border-radius: 50%;
+  box-shadow: 0px 0px 0px 4px #3aa7bd;
+  z-index: 8;
+  transform-origin: 50% 50%;
+}
+
+.active #hero {
+  animation: dance 0.517s alternate linear infinite;
+}
+
+#bloodshed {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+figure#context {
+  position: absolute;
+  left: calc(50% - 300px);
+  top: calc(50% - 300px);
+  width: 600px;
+  height: 600px;
+  overflow: hidden;
+  margin: 0 auto;
+  box-shadow: 0px 0px 0px 4px rgba(0, 0, 0, 0.5);
+}
+
+figure#context::before {
+  background: url("../assets/sahir-irfan-01.jpeg");
+  filter: blur(1px);
+  content: "";
+  z-index: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+div.level-notify {
+  position: absolute;
+  text-align: center;
+  bottom: calc(10% + 30px);
+  left: 50%;
+  transform-origin: 50% 50%;
+  transform: translate(-50%, -50%) translateZ(0) scale(1.2);
+  animation: level-enter 2000ms ease-in forwards;
+  font-size: 2rem;
+  color: #3aa7bd;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.2);
+  line-height: 1;
+}
+
+div.screen {
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 10;
+  height: 100%;
+  flex-direction: column;
+  transition: opacity 250ms ease-out;
+  visibility: hidden;
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  line-height: 1.6;
+}
+
+div.screen header, div.screen main, div.screen footer {
+  margin: 1rem auto;
+  width: 90%;
+  overflow: auto;
+}
+
+div.screen footer {
+  margin-top: 2rem;
+}
+
+div.screen header {
+  padding-top: 2rem;
+}
+
+div.screen h1, div.screen h2, div.screen button {
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+
+div.screen footer > div {
+  text-align: center;
+  padding: 0.5rem 0 0;
+}
+
+div.screen footer > div label, div.screen footer > div input {
+  display: block;
+  margin: 0 auto;
+}
+
+div.screen footer > div label {
+  margin-bottom: 0.25rem;
+}
+
+div.screen footer > div input {
+  background: #404040;
+  border: none;
+  text-align: center;
+  width: 40px;
+  padding: 0.5rem 0 0.5rem 0.5rem;
+}
+
+div.screen ol {
+  width: 70%;
+  margin: 1rem auto;
+}
+
+div.screen header, div.screen h2, div.screen p, div.screen footer {
+  text-align: center;
+}
+
+div.screen.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+div.screen button {
+  background: #7BC8A4;
+  appearance: none;
+  border: #5bba8e;
+  padding: 1rem 2rem;
+}
+
+div.screen button:hover, div.screen button:active {
+  background: #5bba8e;
+}
+
+#result, .result {
+  width: 100%;
+  overflow: auto;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+#result ul, .result ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+#result li, .result li {
+  min-width: 13.985714%;
+}
+
+#result li.full, .result li.full {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+#result span, .result span {
+  display: block;
+}
+
+#result span.label, .result span.label {
+  font-weight: bold;
+  margin-right: 0.2em;
+}
+
+#result span.code, .result span.code {
+  display: block;
+  white-space: pre;
+}
+
+span.projectile {
+  position: absolute;
+  display: block;
+  top: -5px;
+  left: -5px;
+  border-radius: 50%;
+  height: 10px;
+  width: 10px;
+  background: #FFC65D;
+  transform-origin: 50% 50%;
+  transform: translate3d(0, 0, 0);
+  transition: transform 200ms linear;
+  z-index: 7;
+}
+
+div.baddie {
+  position: absolute;
+  background: rgba(27, 27, 27, 0.5);
+  color: white;
+  font-size: 0.8rem;
+  text-align: center;
+  transform: translate3d(300px, -100px, 0);
+  transform-origin: 50% 50%;
+  padding: 0.2em 0.4em;
+  top: 0;
+  left: 0;
+  z-index: 8;
+  opacity: 0;
+  animation: enter 500ms ease-out forwards;
+  transition: transform 200ms linear;
+}
+
+div.baddie.active {
+  z-index: 9;
+  background: rgba(27, 27, 27, 0.9);
+}
+
+div.baddie span.hit {
+  color: #F16745;
+  animation: hit 200ms ease-in-out;
+}
+
+div.baddie.killed {
+  animation: kill 300ms ease-in forwards;
+}
+
+div.baddie.baddie-lvl-1 {
+  font-size: 0.72rem;
+}
+
+span.projectile-1 {
+  animation: explode-1 200ms ease-in-out 200ms forwards;
+}
+
+span.projectile-1:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(236, 94, 58, 0.02);
+  transform-origin: 50% 50%;
+  transform: translate(-50%, -50%) scale(0.01);
+  animation: explode-1-after 200ms ease-in-out 200ms forwards;
+}
+
+@keyframes explode-1 {
+  to {
+    background: rgba(236, 171, 50, 0.02);
+    background: rgba(236, 171, 50, 0);
+  }
+}
+
+@keyframes explode-1-after {
+  from {
+    transform: translate(-50%, -50%) scale(0.01);
+    background: #e6ab32;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    background: rgba(236, 94, 58, 0.02);
+  }
+}
+
+div.baddie.baddie-lvl-2 {
+  font-size: 0.84rem;
+}
+
+span.projectile-2 {
+  animation: explode-2 200ms ease-in-out 200ms forwards;
+}
+
+span.projectile-2:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: rgba(236, 94, 58, 0.02);
+  transform-origin: 50% 50%;
+  transform: translate(-50%, -50%) scale(0.01);
+  animation: explode-2-after 200ms ease-in-out 200ms forwards;
+}
+
+@keyframes explode-2 {
+  to {
+    background: rgba(236, 171, 50, 0.02);
+    background: rgba(236, 171, 50, 0);
+  }
+}
+
+@keyframes explode-2-after {
+  from {
+    transform: translate(-50%, -50%) scale(0.01);
+    background: #e6ab32;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    background: rgba(236, 94, 58, 0.02);
+  }
+}
+
+/* ... (similar patterns for levels 3-10) ... */
+
+#audio-toggle {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  appearance: none;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+#audio-toggle svg {
+  fill: white;
+  stroke: white;
+  width: 30px;
+  height: auto;
+}
+
+#audio-toggle .on {
+  display: block;
+}
+
+#audio-toggle .off {
+  display: none;
+}
+
+#audio-toggle.muted .on {
+  display: none;
+}
+
+#audio-toggle.muted .off {
+  display: block;
+}
+
+@keyframes hit {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes kill {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes enter {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes dance {
+  from {
+    transform: skew(2deg, 2deg) scale(0.95);
+  }
+  to {
+    transform: skew(-2deg, -2deg) scale(1.05);
+  }
+}
+
+@keyframes dance-bg {
+  from {
+    left: 0;
+    right: 0;
+  }
+  to {
+    left: -0.25rem;
+    right: -0.25rem;
+  }
+}
+
+@keyframes level-enter {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateZ(0) scale(1.2);
+  }
+  30%, 80% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateZ(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateZ(0) scale(1);
+  }
+}
