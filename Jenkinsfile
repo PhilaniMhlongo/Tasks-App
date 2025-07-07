@@ -7,6 +7,7 @@ pipeline {
             steps {
                 script {
                     echo "Testing the application..."
+                    sh "mvn test"
                     
 
                 }
@@ -16,6 +17,7 @@ pipeline {
             steps {
                 script {
                     echo "Packaging the application to JAR file..."
+                    sh "mvn clean package"
                 }
             }
         }
