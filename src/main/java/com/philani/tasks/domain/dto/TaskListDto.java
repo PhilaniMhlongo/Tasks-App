@@ -1,4 +1,4 @@
-package com.philani.tasks.domain.entities.dto;
+package com.philani.tasks.domain.dto;
 
 import java.util.List;
 import java.util.UUID;

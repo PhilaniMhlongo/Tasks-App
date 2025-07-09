@@ -1,4 +1,4 @@
-package com.philani.tasks.domain.entities.dto;
+package com.philani.tasks.domain.dto;
 
 import com.philani.tasks.domain.entities.TaskPriority;
 import com.philani.tasks.domain.entities.TaskStatus;

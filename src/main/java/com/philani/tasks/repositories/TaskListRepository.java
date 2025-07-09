@@ -1,10 +1,11 @@
 package com.philani.tasks.repositories;
 
-import com.philani.tasks.domain.entities.TaskList;
-import org.stringframework.data.jpa.repository.JpaRepository;
-import org.springframework.strteotype.Repository;
-
 import java.util.UUID;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.philani.tasks.domain.entities.TaskList;
+
 @Repository
-public interface TaskListRepositoy extends JpaRepository<TaskList,UUID> {}
+public interface TaskListRepository extends JpaRepository<TaskList,UUID> {}

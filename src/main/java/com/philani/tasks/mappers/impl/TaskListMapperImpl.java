@@ -1,75 +1,70 @@
 
 package com.philani.tasks.mappers.impl;
 
-import com.philani.tasks.domain.dto.TaskListDto;
-import com.philani.tasks.domain.entities.Task;
+import java.util.List;
+import java.util.Optional;
 
-import com.philani.tasks.domain.entities.TaskList;
-import com.philani.tasks.domain.entities.TaskStatus;
-
-
-
-import com.philani.tasks.mappers.TaskMapper;
-import com.philani.tasks.mappers.TaskListMapper;
 import org.springframework.stereotype.Component;
 
+import com.philani.tasks.domain.dto.TaskListDto;
+import com.philani.tasks.domain.entities.Task;
+import com.philani.tasks.domain.entities.TaskList;
+import com.philani.tasks.domain.entities.TaskStatus;
+import com.philani.tasks.mappers.TaskListMapper;
+import com.philani.tasks.mappers.TaskMapper;
+
 @Component
-public class TaskMapperImpl implements TaskMapper {
+public class TaskListMapperImpl implements TaskListMapper {
 
     private final TaskMapper taskMapper;
 
-    public TaskListMapperImpl(TaskMapper taskMapper){
-
+    public TaskListMapperImpl(TaskMapper taskMapper) {
         this.taskMapper = taskMapper;
     }
 
     @Override
     public TaskList fromDto(TaskListDto taskListDto) {
-
         return new TaskList(
-            taskListDto.id()
-            taskListDto.title(),
-            taskListDto.description(),
-            Optional.ofNullable(taskListDto.task())
-                .map(tasks -> tasks.stream()
-                    .map(taskMapper::fromDto)
-                    .toList()).orElse(null),
+                taskListDto.id(),
+                taskListDto.title(),
+                taskListDto.description(),
+                Optional.ofNullable(taskListDto.tasks())
+                        .map(tasks -> tasks.stream()
+                                .map(taskMapper::fromDto)
+                                .toList()
+                        ).orElse(null),
                 null,
-                null);
+                null
+        );
     }
 
     @Override
     public TaskListDto toDto(TaskList taskList) {
         return new TaskListDto(
-        taskList.getId(),
-        taskList.getTitle(),
-        taskList.getDescription(),
-        Optional.ofNullable(taskList.getTask())
-            .map(List::size)
-            .orElse(0),
-        calculateTaskListProgress(taskList.getTask()),
-        Optional.ofNullable(taskList.getTask())
-            .map(task -> tasks.stream().map(taskMapper::toDto).toList()).orElse(null)
+                taskList.getId(),
+                taskList.getTitle(),
+                taskList.getDescription(),
+                Optional.ofNullable(taskList.getTasks())
+                        .map(List::size)
+                        .orElse(0),
+                calculateTaskListProgress(taskList.getTasks()),
+                Optional.ofNullable(taskList.getTasks())
+                        .map(tasks ->
+                                tasks.stream().map(taskMapper::toDto).toList()
+                        ).orElse(null)
         );
     }
 
-
-    private Double calculateTaskListProgress(List<Task> tasks){
-
-        if(null==tasks) {
-
+    private Double calculateTaskListProgress(List<Task> tasks) {
+        if(null == tasks) {
             return null;
         }
 
-        long closedTaskCount = tasks.stream().filter(task -> 
-            TaskStatus.CLOSED == task.getStatus()).count();
+        long closedTaskCount = tasks.stream().filter(task ->
+                TaskStatus.CLOSE == task.getStatus()
+        ).count();
 
         return (double) closedTaskCount / tasks.size();
-
-
     }
 
-
-
 }
-
