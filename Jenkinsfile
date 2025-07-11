@@ -10,7 +10,7 @@ pipeline {
             steps {
                 script {
                     echo "Testing the application..."
-                    sh "mvn test"
+                    sh "mvn test -Dspring.profiles.active=test"
                     
 
                 }
