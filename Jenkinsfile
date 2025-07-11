@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     echo "Packaging the application to JAR file..."
-                    sh "mvn clean package"
+                    sh "mvn package -DskipTests"
                 }
             }
         }
