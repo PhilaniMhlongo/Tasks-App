@@ -49,9 +49,9 @@ pipeline {
                 script {
                     echo "Building the Docker image..."
                     withCredentials([usernamePassword(credentialsId: 'Docker', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                        sh "docker build -t philanimhlongo/task-app:${VERSION} ."
+                        sh "docker build -t philanimhlongo/task-app:${env.VERSION} ."
                         sh 'echo $PASS | docker login -u $USER --password-stdin'
-                        sh "docker push philanimhlongo/task-app:${VERSION}"
+                        sh "docker push philanimhlongo/task-app:${env.VERSION}"
                     }
                 }
             }
@@ -66,7 +66,7 @@ pipeline {
                         sh "git config --global user.email 'jenkins@devops.com'"
                         sh "git remote set-url origin https://${USERNAME}:${PASSWORD}@github.com/PhilaniMhlongo/Tasks-App.git"
                         sh "git add ."
-                        sh "git commit -m 'Version updated to ${VERSION}' || echo 'No changes to commit'"
+                        sh "git commit -m 'Version updated to ${env.VERSION}' || echo 'No changes to commit'"
                         sh "git push origin HEAD:main"
                     }
                 }
