@@ -47,7 +47,7 @@ pipeline {
         stage("build image") {
             steps {
                 script {
-                    echo "Building the Docker image..."
+                    echo "Building Docker image with tag: ${env.VERSION}"
                     withCredentials([usernamePassword(credentialsId: 'Docker', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                         sh "docker build -t philanimhlongo/task-app:${env.VERSION} ."
                         sh 'echo $PASS | docker login -u $USER --password-stdin'
