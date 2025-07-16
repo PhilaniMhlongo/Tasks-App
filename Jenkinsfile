@@ -48,7 +48,7 @@ pipeline {
             steps {
                 script {
                     echo "Building the Docker image..."
-                    withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                    withCredentials([usernamePassword(credentialsId: 'Docker', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                         sh "docker build -t philanimhlongo/task-app:${VERSION} ."
                         sh 'echo $PASS | docker login -u $USER --password-stdin'
                         sh "docker push philanimhlongo/task-app:${VERSION}"
@@ -60,7 +60,7 @@ pipeline {
         stage("commit changes") {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    withCredentials([usernamePassword(credentialsId: 'Github', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                         echo "Committing changes to the repository..."
                         sh "git config --global user.name 'jenkins'"
                         sh "git config --global user.email 'jenkins@devops.com'"
