@@ -61,9 +61,9 @@ pipeline {
                 script {
                     echo "Building Docker image with tag: ${env.VERSION}"
                     withCredentials([usernamePassword(credentialsId: 'Docker', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                        sh "sudo docker build -t philanimhlongo/task-app:${env.VERSION} ."
+                        sh "docker build -t philanimhlongo/task-app:${env.VERSION} ."
                         sh 'echo $PASS | docker login -u $USER --password-stdin'
-                        sh "sudo docker push philanimhlongo/task-app:${env.VERSION}"
+                        sh "docker push philanimhlongo/task-app:${env.VERSION}"
                     }
                 }
             }
