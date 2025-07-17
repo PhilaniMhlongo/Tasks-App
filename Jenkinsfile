@@ -6,22 +6,34 @@ pipeline {
         maven 'maven3.9'
     }
 
-    environment {
-        VERSION = '2'
-    }
-
+    
     stages {
 
         stage("version increase") {
             steps {
                 script {
                     echo 'Increasing app version...'
+                    
+             
+                    def currentVersion = sh(
+                        script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout',
+                        returnStdout: true
+                    ).trim()
+                    echo "Current version: ${currentVersion}"
+                    
+                   
                     sh 'mvn build-helper:parse-version versions:set \
                         -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
                         versions:commit'
-                    def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
-                    def version = matcher[0][1]
-                    env.VERSION = version
+                    
+                   
+                    def newVersion = sh(
+                        script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout',
+                        returnStdout: true
+                    ).trim()
+                    
+                    env.VERSION = newVersion
+                    echo "Version updated to: ${env.VERSION}"
                 }
             }
         }
@@ -49,9 +61,9 @@ pipeline {
                 script {
                     echo "Building Docker image with tag: ${env.VERSION}"
                     withCredentials([usernamePassword(credentialsId: 'Docker', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                        sh "docker build -t philanimhlongo/task-app:${env.VERSION} ."
+                        sh "sudo docker build -t philanimhlongo/task-app:${env.VERSION} ."
                         sh 'echo $PASS | docker login -u $USER --password-stdin'
-                        sh "docker push philanimhlongo/task-app:${env.VERSION}"
+                        sh "sudo docker push philanimhlongo/task-app:${env.VERSION}"
                     }
                 }
             }
