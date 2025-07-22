@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import com.philani.tasks.domain.entities.TaskList;
 import com.philani.tasks.domain.dto.TaskDto;
 import com.philani.tasks.domain.dto.TaskListDto;
 import com.philani.tasks.domain.entities.Task;
+import com.philani.tasks.domain.entities.TaskList;
 import com.philani.tasks.domain.entities.TaskPriority;
 import com.philani.tasks.domain.entities.TaskStatus;
 
@@ -128,6 +128,28 @@ public class TestDataUtil {
                 5,
                 0.8,
                 list
+        );
+    }
+
+  public static TaskDto createTestTaskDtoA() {
+        return new TaskDto(
+                UUID.randomUUID(),
+                "Task A",
+                "Description A",
+                LocalDateTime.of(2025, 7, 25, 12, 0),
+                TaskPriority.MEDIUM,
+                TaskStatus.OPEN
+        );
+    }
+
+    public static TaskDto createTestTaskDtoB() {
+        return new TaskDto(
+                UUID.randomUUID(),
+                "Task B",
+                "Description B",
+                LocalDateTime.of(2025, 8, 1, 10, 30),
+                TaskPriority.HIGH,
+                TaskStatus.OPEN
         );
     }
 }
