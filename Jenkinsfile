@@ -83,7 +83,9 @@ pipeline {
             steps {
                 script {
                     echo "Deploying the application to Kubernetes..."
-                    sh 'kubectl create deployment nginx-deployment --image=nginx'
+                    sh 'kubectl apply -f spring-configMap.yaml'
+                    sh 'kubectl apply -f postgres-secret.yaml'
+                    sh 'kubectl apply -f manifests.yaml'
                     
                 }
             }
