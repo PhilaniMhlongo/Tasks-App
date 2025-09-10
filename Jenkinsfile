@@ -85,7 +85,7 @@ pipeline {
                     echo "Deploying the application to Kubernetes..."
                     sh 'kubectl apply -f spring-configMap.yaml'
                     sh 'kubectl apply -f postgres-secret.yaml'
-                    sh 'kubectl apply -f manifests.yaml'
+                    sh 'kubectl apply -f manifest.yaml'
                     
                 }
             }
