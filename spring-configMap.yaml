@@ -4,3 +4,4 @@ metadata:
   name: spring-config
 data:
   spring_datasource_url: jdbc:postgresql://db:5432/postgres
+  postgres_db: "taskapp"
