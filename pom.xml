@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.philani</groupId>
 	<artifactId>tasks</artifactId>
-	<version>0.0.12</version>
+	<version>0.0.13</version>
 	<name>tasks</name>
 	<description>Task tracking App</description>
 	<url/>
