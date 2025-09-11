@@ -8,7 +8,7 @@ A simple RESTful API for managing tasks, built with **Spring Boot**. This backen
 ```bash
 mvn test
 mvn clean package
-java -jar target/your-app-name-0.0.1-SNAPSHOT.jar
+java -jar target/task-0.0.1-SNAPSHOT.jar
 
 
 ```
